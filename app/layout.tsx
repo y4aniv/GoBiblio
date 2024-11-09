@@ -1,4 +1,4 @@
-import "./globals.css";
+import "@/styles/globals.css";
 import "@mantine/core/styles.css";
 
 import type { MantineProviderProps } from "@mantine/core";
