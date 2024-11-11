@@ -1,4 +1,4 @@
-import { Button, Stack, Text, Title } from "@mantine/core";
+import { Button, Group, Stack, Text, Title } from "@mantine/core";
 
 const AuthVerifyEmail = (): React.ReactElement => {
   return (
@@ -7,7 +7,9 @@ const AuthVerifyEmail = (): React.ReactElement => {
       <Text>
         {"Consultez la boîte de réception de bruno.cordier@example.com pour vérifier votre compte et démarrer."}
       </Text>
-      <Button>{"Renvoyer l'e-mail"}</Button>
+      <Group>
+        <Button>{"Renvoyer l'e-mail"}</Button>
+      </Group>
     </Stack>
   );
 };
