@@ -33,7 +33,7 @@ const AuthRegister = (): React.ReactElement => {
 
   return (
     <Stack>
-      <Title order={2}>Créez votre compte GoBiblio</Title>
+      <Title order={2}>{"Créez votre compte GoBiblio"}</Title>
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <Stack>
           <Group grow>
@@ -58,7 +58,7 @@ const AuthRegister = (): React.ReactElement => {
           />
           <PasswordInput
             label="Mot de passe"
-            placeholder={"••••••••••••••"}
+            placeholder={"•••••••••••••"}
             key={form.key("password")}
             {...form.getInputProps("password")}
           />
