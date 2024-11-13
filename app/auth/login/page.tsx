@@ -41,7 +41,9 @@ const AuthLogin = (): React.ReactElement => {
             {...form.getInputProps("password")}
           />
           <Text ta={"right"}>
-            <Link href={"/auth/forgot-password"}>{"Mot de passe oublié ?"}</Link>
+            <Link href={`/auth/forgot-password${form.values.email ? "?email=" + form.values.email : ""}`}>
+              {"Mot de passe oublié ?"}
+            </Link>
           </Text>
           <Button type={"submit"}>{"Connexion"}</Button>
           <Text ta={"center"}>
