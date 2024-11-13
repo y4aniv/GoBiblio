@@ -4,6 +4,7 @@ import "@mantine/core/styles.css";
 import type { MantineProviderProps } from "@mantine/core";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import type { Metadata } from "next";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const metadata: Metadata = {
   title: "GoBiblio",
@@ -23,7 +24,9 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>): Reac
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider theme={MANTINE_THEME}>{children}</MantineProvider>
+        <NuqsAdapter>
+          <MantineProvider theme={MANTINE_THEME}>{children}</MantineProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );
