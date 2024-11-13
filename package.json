@@ -25,6 +25,7 @@
     "@mantine/form": "^7.13.5",
     "@mantine/hooks": "^7.13.5",
     "next": "15.0.3",
+    "nuqs": "^2.1.2",
     "react": "latest",
     "react-dom": "latest"
   },
