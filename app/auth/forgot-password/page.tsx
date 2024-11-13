@@ -3,7 +3,8 @@
 import { Button, Stack, Text, TextInput, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import Link from "next/link";
-import { useState } from "react";
+import { useQueryState } from "nuqs";
+import { useEffect, useState } from "react";
 
 import regex from "@/utils/regex";
 
@@ -22,6 +23,15 @@ const AuthForgotPassword = (): React.ReactElement => {
   });
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [secondEmailSent, setSecondEmailSent] = useState<boolean>(false);
+  const [emailQuery, setEmailQuery] = useQueryState("email", { defaultValue: "", clearOnDefault: true });
+
+  useEffect(() => {
+    if (emailQuery) {
+      form.setValues({ email: emailQuery });
+      setEmailQuery("");
+    }
+  }, [form.values.email]);
+
   return (
     <Stack>
       {emailSent ? (
