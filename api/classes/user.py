@@ -1,4 +1,4 @@
-from sqlalchemy import DateTime, Index, Text
+from sqlalchemy import DateTime, Index, Text, Boolean
 from sqlalchemy.orm import mapped_column, relationship, Mapped
 from utils.orm import Base
 import uuid
@@ -18,6 +18,7 @@ class User(Base):
     first_name = mapped_column(Text, nullable=False)
     last_name = mapped_column(Text, nullable=False)
     email = mapped_column(Text, nullable=False)
+    email_verified = mapped_column(Boolean, nullable=False, default=False)
     password = mapped_column(Text, nullable=False)
     created_at = mapped_column(DateTime, nullable=False, default=datetime.now)
     updated_at = mapped_column(DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
