@@ -16,7 +16,7 @@ class User(Base):
     created_at = mapped_column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
     updated_at = mapped_column(DateTime, nullable=False)
 
-    def __init__(self, id, first_name, last_name, email, password, created_at, updated_at):
+    def __init__(self, id: str, first_name: str, last_name: str, email: str, password: str, created_at: DateTime, updated_at: DateTime) -> None:
         """
         Initialize the User object
 
@@ -28,6 +28,8 @@ class User(Base):
             - password (str): The password of the user
             - created_at (datetime): The time the user was created
             - updated_at (datetime): The time the user was updated
+        Returns:
+            - None
         """
         self.id = id
         self.first_name = first_name

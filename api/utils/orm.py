@@ -39,12 +39,14 @@ def save(self, session: 'SessionType' = None) -> 'DeclarativeMeta':
     session.commit()
     return self
 
-def delete(self, session: 'SessionType' = None):
+def delete(self, session: 'SessionType' = None) -> None:
     """
     Delete the object from the database
 
     Args:
         - session (SessionType): The session to use to delete the object
+    Returns:
+        - None
     """
     if session is None:
         session = Session()
