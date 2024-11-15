@@ -26,6 +26,7 @@
     "@mantine/core": "^7.13.5",
     "@mantine/form": "^7.13.5",
     "@mantine/hooks": "^7.13.5",
+    "axios": "^1.7.7",
     "next": "15.0.3",
     "nuqs": "^2.1.2",
     "react": "latest",
