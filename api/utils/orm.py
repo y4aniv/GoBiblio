@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from sqlalchemy.orm.session import Session as SessionType
     from sqlalchemy.ext.declarative import DeclarativeMeta
 
-engine = create_engine('sqlite:///database/dev.db')
+engine = create_engine('sqlite:///database/dev.db', pool_pre_ping=True)
 
 SessionFactory = sessionmaker(bind=engine)
 Session = scoped_session(SessionFactory)
@@ -37,6 +37,7 @@ def save(self, session: 'SessionType' = None) -> 'DeclarativeMeta':
 
     session.add(self)
     session.commit()
+    
     return self
 
 def delete(self, session: 'SessionType' = None) -> None:
