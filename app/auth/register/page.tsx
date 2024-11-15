@@ -2,7 +2,10 @@
 
 import { Button, Group, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
+import axios from "axios";
 import Link from "next/link";
+import { useState } from "react";
 
 import regex from "@/utils/regex";
 
@@ -31,10 +34,62 @@ const AuthRegister = (): React.ReactElement => {
     },
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleFormSubmit = (values: Record<string, string>) => {
+    setIsSubmitting(true);
+    axios
+      .post("/api/auth/register", values)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        switch (error.response.data.message) {
+          case "MISSING_FIELDS":
+            error.response.data.data.forEach((field: string) => {
+              form.setFieldError(field, "Ce champ est requis");
+            });
+            break;
+
+          case "WRONG_DATA_TYPE":
+            error.response.data.data.forEach((field: string) => {
+              form.setFieldError(field, "Type de données incorrect");
+            });
+            break;
+
+          case "INVALID_EMAIL":
+            form.setFieldError("email", "Adresse e-mail invalide");
+            break;
+
+          case "INVALID_PASSWORD":
+            form.setFieldError(
+              "password",
+              "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial",
+            );
+            break;
+
+          case "EMAIL_ALREADY_EXISTS":
+            form.setFieldError("email", "Cette adresse e-mail est déjà utilisée");
+            break;
+
+          default:
+            notifications.show({
+              title: "Une erreur est survenue lors de la création de votre compte",
+              message: `Veuillez réessayer plus tard. (C${error.response.status})`,
+              withCloseButton: false,
+            });
+            break;
+        }
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
+  };
+
   return (
     <Stack>
       <Title order={2}>{"Créez votre compte GoBiblio"}</Title>
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit((values) => handleFormSubmit(values))}>
         <Stack>
           <Group grow>
             <TextInput
@@ -62,7 +117,9 @@ const AuthRegister = (): React.ReactElement => {
             key={form.key("password")}
             {...form.getInputProps("password")}
           />
-          <Button type="submit">{"Créer un compte"}</Button>
+          <Button type="submit" loading={isSubmitting}>
+            {"Créer un compte"}
+          </Button>
         </Stack>
       </form>
       <Text ta={"center"}>
