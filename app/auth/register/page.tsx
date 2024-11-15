@@ -3,10 +3,10 @@
 import { Button, Group, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
-import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 
+import apiClient from "@/utils/apiClient";
 import regex from "@/utils/regex";
 
 const AuthRegister = (): React.ReactElement => {
@@ -38,10 +38,10 @@ const AuthRegister = (): React.ReactElement => {
 
   const handleFormSubmit = (values: Record<string, string>) => {
     setIsSubmitting(true);
-    axios
-      .post("/api/auth/register", values)
-      .then((response) => {
-        console.log(response.data);
+    apiClient
+      .post("/auth/register", values)
+      .then(() => {
+        // TODO: Handle success
       })
       .catch((error) => {
         switch (error.response.data.message) {
