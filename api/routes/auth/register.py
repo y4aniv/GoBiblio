@@ -81,7 +81,6 @@ def post_register() -> tuple[Dict[str, Any], int]:
 
     response = jsonify({
         'status': 'success',
-        'message': 'USER_CREATED',
         'data': {
             'id': user.id,
             'firstName': user.first_name,
