@@ -18,10 +18,10 @@ const isAuthenticated = async (): Promise<boolean> => {
   return res.status === 200;
 };
 
-const useAuth = async (): Promise<{ isAuthenticated: boolean }> => {
+const withAuth = async (): Promise<{ isAuthenticated: boolean }> => {
   return {
     isAuthenticated: await isAuthenticated(),
   };
 };
 
-export default useAuth;
+export default withAuth;
