@@ -2,7 +2,7 @@ from typing import Dict, Any
 from flask import Blueprint, jsonify, request
 from http import HTTPStatus
 from utils.lib import find_missing_keys, check_data_type
-from utils.orm import Session
+from utils.orm import Session as session
 from classes.user import User
 from bcrypt import hashpw, gensalt
 from classes.session_token import SessionToken
@@ -65,7 +65,6 @@ def post_register() -> tuple[Dict[str, Any], int]:
             'message': 'INVALID_PASSWORD'
         }), HTTPStatus.BAD_REQUEST
 
-    session = Session()
     if session.query(User).filter_by(email=data['email']).first():
         return jsonify({
             'status': 'error',
@@ -77,7 +76,7 @@ def post_register() -> tuple[Dict[str, Any], int]:
         last_name=data['lastName'],
         email=data['email'],
         password=hashpw(data['password'].encode(), gensalt()).decode()
-    ).save()
+    ).save(session)
 
     response = jsonify({
         'status': 'success',
@@ -89,7 +88,7 @@ def post_register() -> tuple[Dict[str, Any], int]:
         }
     })
 
-    session_token = SessionToken(user_id=user.id, expires_at=datetime.now() + timedelta(days=1)).save()
+    session_token = SessionToken(user_id=user.id, expires_at=datetime.now() + timedelta(days=1)).save(session)
     response.set_cookie('oneSessionToken', session_token.id, expires=session_token.expires_at, httponly=True)
 
     return response, HTTPStatus.CREATED
