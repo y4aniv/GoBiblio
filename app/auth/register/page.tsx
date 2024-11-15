@@ -74,7 +74,7 @@ const AuthRegister = (): React.ReactElement => {
 
           default:
             notifications.show({
-              title: "Une erreur est survenue lors de la création de votre compte",
+              title: "Une erreur s'est produite lors de la création de votre compte",
               message: `Veuillez réessayer plus tard. (C${error.response.status})`,
               withCloseButton: false,
             });
