@@ -1,5 +1,5 @@
-from typing import Dict, Any, List
-from flask import Blueprint, jsonify, request, current_app
+from typing import Dict, Any
+from flask import Blueprint, jsonify, request
 from http import HTTPStatus
 from utils.lib import find_missing_keys, check_data_type
 from utils.orm import Session
