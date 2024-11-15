@@ -32,3 +32,14 @@ class SessionToken(Base):
         self.id = uuid.uuid4().hex
         self.user_id = user_id
         self.expires_at = expires_at
+
+    def is_expired(self) -> bool:
+        """
+        Check if the token is expired
+
+        Args:
+            - None
+        Returns:
+            - bool: True if the token is expired, False otherwise
+        """
+        return self.expires_at < datetime.now()
