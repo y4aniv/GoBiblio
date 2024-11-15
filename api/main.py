@@ -1,10 +1,12 @@
 from flask import Flask, jsonify
 
 from routes.auth.register import register
+from routes.auth.me import me
 
 app = Flask(__name__)
 
 app.register_blueprint(register)
+app.register_blueprint(me)
 
 @app.errorhandler(404)
 def page_not_found(e):
