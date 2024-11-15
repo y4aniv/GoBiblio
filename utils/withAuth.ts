@@ -2,25 +2,26 @@ import { cookies } from "next/headers";
 
 import apiClient from "./apiClient";
 
-const isAuthenticated = async (): Promise<boolean> => {
+const getAuthResponse = async () => {
   const cookieStore = await cookies();
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((cookie) => `${cookie.name}=${cookie.value}`)
+    .join("; ");
 
-  const res = await apiClient.get("/auth/me", {
+  return apiClient.get("/auth/me", {
     headers: {
-      Cookie: cookieStore
-        .getAll()
-        .map((cookie) => `${cookie.name}=${cookie.value}`)
-        .join("; "),
+      Cookie: cookieHeader,
     },
     validateStatus: () => true,
   });
-
-  return res.status === 200;
 };
 
-const withAuth = async (): Promise<{ isAuthenticated: boolean }> => {
+const withAuth = async (): Promise<{ isAuthenticated: boolean; isEmailVerified: boolean }> => {
+  const res = await getAuthResponse();
   return {
-    isAuthenticated: await isAuthenticated(),
+    isAuthenticated: res.status === 200,
+    isEmailVerified: res.status === 200 && res.data?.data.email.verified,
   };
 };
 
