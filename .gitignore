@@ -47,3 +47,6 @@ next-env.d.ts
 
 # database
 /database/*.db-journal
+
+# python
+/api/**/__pycache__/
