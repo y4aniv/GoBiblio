@@ -5,6 +5,8 @@ from utils.lib import find_missing_keys, check_data_type
 from utils.orm import Session
 from classes.user import User
 from bcrypt import hashpw, gensalt
+from classes.session_token import SessionToken
+from datetime import datetime, timedelta
 
 register = Blueprint('register', __name__)
 
@@ -68,4 +70,7 @@ def post_register() -> tuple[Dict[str, Any], int]:
         }
     })
 
+    session_token = SessionToken(user_id=user.id, expires_at=datetime.now() + timedelta(days=1)).save()
+    
+    response.set_cookie('oneSessionToken', session_token.id, expires=session_token.expires_at, httponly=True)
     return response, HTTPStatus.CREATED
