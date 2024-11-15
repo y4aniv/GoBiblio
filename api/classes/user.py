@@ -1,6 +1,8 @@
-from sqlalchemy import DateTime, Index, Text, text
+from sqlalchemy import DateTime, Index, Text
 from sqlalchemy.orm import mapped_column
 from utils.orm import Base
+import uuid
+from datetime import datetime
 
 class User(Base):
     __tablename__ = 'User'
@@ -13,28 +15,12 @@ class User(Base):
     last_name = mapped_column(Text, nullable=False)
     email = mapped_column(Text, nullable=False)
     password = mapped_column(Text, nullable=False)
-    created_at = mapped_column(DateTime, nullable=False, server_default=text('CURRENT_TIMESTAMP'))
-    updated_at = mapped_column(DateTime, nullable=False)
+    created_at = mapped_column(DateTime, nullable=False, default=datetime.now)
+    updated_at = mapped_column(DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
 
-    def __init__(self, id: str, first_name: str, last_name: str, email: str, password: str, created_at: DateTime, updated_at: DateTime) -> None:
-        """
-        Initialize the User object
-
-        Args:
-            - id (str): The id of the user
-            - first_name (str): The first name of the user
-            - last_name (str): The last name of the user
-            - email (str): The email of the user
-            - password (str): The password of the user
-            - created_at (datetime): The time the user was created
-            - updated_at (datetime): The time the user was updated
-        Returns:
-            - None
-        """
-        self.id = id
+    def __init__(self, first_name: str, last_name: str, email: str, password: str) -> None:
+        self.id = uuid.uuid4().hex
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.password = password
-        self.created_at = created_at
-        self.updated_at = updated_at
