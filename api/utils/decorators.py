@@ -18,13 +18,7 @@ def secure():
             session = Session()
             session_token = session.query(SessionToken).filter_by(id=one_session_token).first()
 
-            if not session_token:
-                return jsonify({
-                    'status': 'error',
-                    'message': 'UNAUTHORIZED'
-                }), 401
-            
-            if session_token.is_expired():
+            if not session_token or session_token.is_expired():
                 return jsonify({
                     'status': 'error',
                     'message': 'UNAUTHORIZED'
