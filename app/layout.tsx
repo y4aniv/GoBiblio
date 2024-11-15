@@ -1,8 +1,10 @@
 import "@/styles/globals.css";
 import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
 
 import type { MantineProviderProps } from "@mantine/core";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 import type { Metadata } from "next";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
@@ -25,7 +27,10 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>): Reac
       </head>
       <body>
         <NuqsAdapter>
-          <MantineProvider theme={MANTINE_THEME}>{children}</MantineProvider>
+          <MantineProvider theme={MANTINE_THEME}>
+            <Notifications position={"top-right"} autoClose={5000} />
+            {children}
+          </MantineProvider>
         </NuqsAdapter>
       </body>
     </html>
