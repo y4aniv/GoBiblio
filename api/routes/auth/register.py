@@ -39,7 +39,7 @@ def post_register() -> tuple[Dict[str, Any], int]:
         'password': request.json.get('password')
     }
 
-    if missing := find_missing_keys(data, required_fields.keys()):
+    if missing := find_missing_keys(request.json, required_fields.keys()):
         return jsonify({
             'status': 'error',
             'message': 'MISSING_FIELDS',
